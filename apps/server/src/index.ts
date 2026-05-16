@@ -1,7 +1,11 @@
 import Fastify from "fastify";
 import cookie from "@fastify/cookie";
 import cors from "@fastify/cors";
+import fastifyStatic from "@fastify/static";
 import websocket from "@fastify/websocket";
+import { existsSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { z } from "zod";
 import {
   CANVAS_HEIGHT,
@@ -143,6 +147,22 @@ app.get("/ws", { websocket: true }, (socket, request) => {
     clients.delete(gameSocket);
   });
 });
+
+const webDistPath = join(dirname(fileURLToPath(import.meta.url)), "../../web/dist");
+if (existsSync(webDistPath)) {
+  await app.register(fastifyStatic, {
+    root: webDistPath
+  });
+
+  app.setNotFoundHandler((request, reply) => {
+    const pathname = new URL(request.raw.url ?? "/", "http://pixelwar.local").pathname;
+    if (pathname.startsWith("/auth") || pathname.startsWith("/canvas") || pathname.startsWith("/health") || pathname === "/ws") {
+      return reply.code(404).send({ error: "Not found" });
+    }
+
+    return reply.sendFile("index.html");
+  });
+}
 
 await app.listen({ port: config.port, host: "0.0.0.0" });
 

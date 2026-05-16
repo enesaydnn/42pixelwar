@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import {
   canvasPointForGridCell,
@@ -18,8 +18,14 @@ import {
 } from "@42pixelwar/shared";
 import "./styles.css";
 
-const apiUrl = import.meta.env.VITE_GAME_API_URL ?? "http://localhost:8787";
-const wsUrl = import.meta.env.VITE_GAME_WS_URL ?? "ws://localhost:8787/ws";
+const defaultApiUrl = import.meta.env.DEV ? "http://localhost:8787" : window.location.origin;
+const defaultWsUrl = import.meta.env.DEV
+  ? "ws://localhost:8787/ws"
+  : `${window.location.protocol === "https:" ? "wss" : "ws"}://${window.location.host}/ws`;
+const apiUrl = import.meta.env.VITE_GAME_API_URL ?? defaultApiUrl;
+const wsUrl =
+  import.meta.env.VITE_GAME_WS_URL ??
+  defaultWsUrl;
 const gameGridLength = TARGET_GRID_SIZE;
 const emptyPixel = TRANSPARENT_COLOR;
 
