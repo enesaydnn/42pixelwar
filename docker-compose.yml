@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: forty_two_pixel_war
+    ports:
+      - "5432:5432"
+    volumes:
+      - pixelwar-postgres:/var/lib/postgresql/data
+      - ./infra/postgres/schema.sql:/docker-entrypoint-initdb.d/001-schema.sql:ro
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  pixelwar-postgres:

@@ -1,0 +1,20 @@
+{
+  "name": "42pixelwar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run build --workspace @42pixelwar/shared && npm run dev --workspace @42pixelwar/server & npm run dev --workspace @42pixelwar/web",
+    "dev:web": "npm run dev --workspace @42pixelwar/web",
+    "dev:server": "npm run dev --workspace @42pixelwar/server",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run build --workspace @42pixelwar/shared && npm run typecheck --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
