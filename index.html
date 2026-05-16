@@ -35,7 +35,7 @@
 <header class="fixed top-0 left-0 w-full h-16 flex justify-between items-center px-6 md:px-12 bg-surface/80 backdrop-blur-lg border-b border-secondary/10 z-50">
     <div class="flex items-center gap-2">
         <span class="material-symbols-outlined text-secondary text-sm md:text-base animate-pulse">terminal</span>
-        <span class="font-status-mono text-xs md:text-sm tracking-widest text-secondary font-bold opacity-90 uppercase">42_CAMPUS // INTRA_ACCESS_V2</span>
+        <span class="font-status-mono text-xs md:text-sm tracking-widest text-secondary font-bold opacity-90 uppercase">42 Türkiye Pixel War</span>
     </div>
     <div class="flex gap-8">
         <span class="font-status-mono text-secondary-fixed text-xs tracking-widest opacity-80">SİSTEM_DURUMU: AKTİF</span>
@@ -253,7 +253,7 @@
     }
     addLog();
 
-    // 4. LOGIN BUTTON LOADING
+    // 4. LOGIN BUTTON LOADING & REDIRECT (Geliştirildi)
     function handleLogin() {
         const btn = document.getElementById('login-btn');
         const text = document.getElementById('btn-text');
@@ -271,6 +271,11 @@
                 text.innerText = "ERİŞİM ONAYLANDI";
                 btn.style.borderColor = "#4ade80";
                 btn.style.color = "#4ade80";
+                
+                // Animasyon bitince 600ms bekle ve 42 Intra linkine uçur
+                setTimeout(() => {
+                    window.location.href = "https://signin.intra.42.fr/";
+                }, 600);
             }
         }, 200);
     }
