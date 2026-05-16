@@ -1,3 +1,0 @@
-- [x] index.html içindeki kullanıcıya görünen İngilizce metinleri Türkçeye çevir
-- [x] Teknik anahtarları ve sınıf adlarını koru
-- [x] Kontrol edip tamamlandığını doğrula

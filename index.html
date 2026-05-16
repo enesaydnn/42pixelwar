@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="tr" style=""><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&amp;family=Space+Mono:wght@400;700&amp;family=Hanken+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
+<html class="dark" lang="tr">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>42 Pixel War - Giriş</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&family=Space+Mono:wght@400;700&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <style>
         body {
             background-color: #0A0A0F;
             color: #e3e1ef;
@@ -20,212 +22,198 @@
         }
         .pixel-grid {
             background-image: 
-                linear-gradient(to right, rgba(146, 144, 149, 0.1) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(146, 144, 149, 0.1) 1px, transparent 1px);
+                linear-gradient(to right, rgba(146, 144, 149, 0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(146, 144, 149, 0.08) 1px, transparent 1px);
             background-size: 20px 20px;
         }
-        .pixel-corner-border {
-            clip-path: polygon(
-                0 4px, 4px 4px, 4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
-                100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
-            );
-        }
         .glow-blue {
-            box-shadow: 0 0 15px rgba(0, 209, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 209, 255, 0.3);
         }
-        .glow-red {
-            box-shadow: 0 0 15px rgba(255, 0, 92, 0.4);
+        
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
         }
+        .scanline-moving {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(166, 230, 255, 0.12) 50%, transparent);
+            animation: scan 4s linear infinite;
+            pointer-events: none;
+            z-index: 5;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { text-shadow: 0 0 15px rgba(0, 209, 255, 0.5); }
+            50% { text-shadow: 0 0 25px rgba(0, 209, 255, 0.8), 0 0 10px rgba(0, 209, 255, 0.4); }
+        }
+        .animate-glow-pulse {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+        
+        /* AŞAĞIDAN YUKARIYA ÇOK YAVAŞ VE AKICI SİBER AKIŞ (GPU DESTEKLİ) */
+        @keyframes driftUpElegant {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            85% { opacity: 0.5; }
+            100% { transform: translateY(-110vh) translateX(30px); opacity: 0; }
+        }
+        .particle {
+            position: absolute;
+            top: 100%; /* Ekranın en alt çizgisinden başlar */
+            width: 4px;
+            height: 4px;
+            background-color: rgba(166, 230, 255, 0.4);
+            box-shadow: 0 0 6px rgba(166, 230, 255, 0.7);
+            animation: driftUpElegant 16s linear infinite;
+            z-index: 2;
+            pointer-events: none;
+        }
+        @keyframes data-flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+            52% { opacity: 0.6; }
+            53% { opacity: 0.9; }
+            80% { opacity: 1; }
+        }
+        .animate-data-flicker {
+            animation: data-flicker 4s infinite;
+        }
+        @keyframes blob-move1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -40px) scale(1.15); }
+            66% { transform: translate(-20px, 30px) scale(0.95); }
+        }
+        @keyframes blob-move2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-30px, 50px) scale(1.1); }
+            66% { transform: translate(30px, -20px) scale(0.85); }
+        }
+        .blob-1 { animation: blob-move1 15s ease-in-out infinite; }
+        .blob-2 { animation: blob-move2 18s ease-in-out infinite reverse; }
     </style>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "secondary-fixed": "#b7eaff",
-                      "tertiary": "#ffb2ba",
-                      "primary-fixed-dim": "#c8c5cd",
-                      "on-tertiary-fixed-variant": "#910031",
-                      "error": "#ffb4ab",
-                      "error-container": "#93000a",
-                      "on-tertiary-container": "#f00056",
-                      "primary": "#c8c5cd",
-                      "surface-container-high": "#292934",
-                      "surface": "#12121c",
-                      "on-surface": "#e3e1ef",
-                      "on-background": "#e3e1ef",
-                      "on-secondary": "#003543",
-                      "on-secondary-fixed": "#001f28",
-                      "on-tertiary-fixed": "#400011",
-                      "on-error-container": "#ffdad6",
-                      "outline-variant": "#47464b",
-                      "tertiary-container": "#200005",
-                      "surface-bright": "#383843",
-                      "secondary-fixed-dim": "#4cd6ff",
-                      "on-tertiary": "#670020",
-                      "on-surface-variant": "#c8c5cb",
-                      "secondary-container": "#14d1ff",
-                      "on-primary": "#303036",
-                      "background": "#12121c",
-                      "surface-container-highest": "#34343f",
-                      "surface-container": "#1f1f29",
-                      "secondary": "#a6e6ff",
-                      "on-primary-fixed-variant": "#47464c",
-                      "tertiary-fixed-dim": "#ffb2ba",
-                      "surface-tint": "#c8c5cd",
-                      "surface-container-lowest": "#0d0d17",
-                      "primary-fixed": "#e4e1e9",
-                      "surface-variant": "#34343f",
-                      "on-secondary-container": "#00566b",
-                      "inverse-primary": "#5f5d64",
-                      "on-primary-container": "#7a797f",
-                      "tertiary-fixed": "#ffd9dc",
-                      "surface-container-low": "#1b1b25",
-                      "outline": "#929095",
-                      "inverse-surface": "#e3e1ef",
-                      "on-primary-fixed": "#1b1b20",
-                      "inverse-on-surface": "#302f3a",
-                      "primary-container": "#0a0a0f",
-                      "on-secondary-fixed-variant": "#004e60",
-                      "surface-dim": "#12121c",
-                      "on-error": "#690005"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.25rem",
-                      "lg": "0.5rem",
-                      "xl": "0.75rem",
-                      "full": "9999px"
-              },
-              "spacing": {
-                      "margin-desktop": "48px",
-                      "gutter": "16px",
-                      "unit": "4px",
-                      "margin-mobile": "16px",
-                      "card-padding-lg": "40px"
-              },
-              "fontFamily": {
-                      "label-sm": ["Space Mono"],
-                      "display-lg": ["Sora"],
-                      "headline-md": ["Sora"],
-                      "body-base": ["Hanken Grotesk"],
-                      "status-mono": ["Space Mono"],
-                      "display-lg-mobile": ["Sora"]
-              },
-              "fontSize": {
-                      "label-sm": ["12px", {"lineHeight": "1", "fontWeight": "700"}],
-                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
-                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
-                      "body-base": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                      "status-mono": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "400"}],
-                      "display-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "800"}]
-              }
-            },
-          },
-        }
-      </script>
 </head>
 <body class="flex min-h-screen">
-<!-- SPLIT SCREEN LAYOUT -->
-<main class="flex flex-col md:flex-row w-full min-h-screen overflow-hidden">
-<!-- LEFT SIDE: HERO (Canvas Visualization) -->
-<section class="relative w-full md:w-1/2 lg:w-3/5 bg-primary-container flex flex-col items-start justify-end p-12 overflow-hidden border-r border-secondary/20">
-<!-- Background Elements -->
-<div class="absolute inset-0 pixel-grid opacity-30"></div>
-<div class="absolute inset-0 scanline opacity-20"></div>
-<!-- Predicted r/place style canvas simulation -->
-<div class="absolute inset-0 flex items-center justify-center opacity-40">
-<div class="w-[800px] h-[800px] grid grid-cols-40 grid-rows-40 gap-px">
-<!-- Simulating pixel clusters -->
-<div class="absolute top-1/4 left-1/4 w-32 h-32 bg-secondary-container blur-3xl opacity-20"></div>
-<div class="absolute bottom-1/4 right-1/4 w-40 h-40 bg-on-tertiary-container blur-3xl opacity-20"></div>
-<!-- Illustrative pixel dots for Istanbul/Kocaeli battle -->
-<img alt="42 Pixel War Canvas" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay" data-alt="A highly detailed overhead visualization of a digital pixel art battleground, reminiscent of r/place. Vibrant clusters of electric cyan and neon crimson pixels clash and overlap against a deep charcoal grid. The lighting is dark and high-contrast, with specific clusters emitting a soft radioactive glow. The aesthetic is purely digital and tactical, featuring sharp geometric patterns and a sense of ongoing real-time territorial warfare in a cyberpunk setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGpUQQOwWCq2p28wlS907NwTZ8hieIdtM4ObbPgWX90geuEjnl4ynYhOjcAr_qRDBoTlmthYLGgAJbO7k_GVCfCbU9EIncp_XFW4oQwpQwrVdTaxhC-y5MlqriUWY_FFsuQ44P2fDdcNbPrJropLokFfRBDxWyLAFAdrPVHQ6m9ragBmqRxvxIIm0NwbCx0Oe-QZb3G8W6tft50b-y_t_GYBjB8j1qkCJF61q7Til1VCXaHlYcygO8wzmT-pLhmqQowuEuexUnNpcC"/>
-</div>
-</div>
-<!-- Content Overlay -->
-<div class="relative z-10 w-full">
-<div class="flex items-center space-x-3 mb-4">
-<span class="flex h-3 w-3 bg-[#4ade80] rounded-full animate-pulse glow-blue"></span>
-<span class="font-status-mono text-status-mono text-[#4ade80] tracking-widest">
-                        TUVAL: AKTİF / GERÇEK ZAMANLI SAVAŞ ÇEVRİM İÇİ
-                    </span>
-</div>
-<h1 class="font-display-lg text-display-lg text-secondary mb-2 tracking-tighter drop-shadow-[0_0_15px_rgba(0,209,255,0.6)] mb-10">
-                    42 PIXEL WAR
-                </h1>
-<div class="flex space-x-6 border-l-2 border-secondary/30 pl-6">
-<div>
-<p class="font-status-mono text-status-mono text-secondary">ISTANBUL</p>
-<p class="font-display-lg-mobile text-display-lg-mobile text-on-surface">42,892 <span class="text-label-sm font-label-sm opacity-50">PX</span></p>
-</div>
-<div class="border-r border-outline-variant h-12 self-center"></div>
-<div>
-<p class="font-status-mono text-status-mono text-on-tertiary-container">KOCAELI</p>
-<p class="font-display-lg-mobile text-display-lg-mobile text-on-surface">39,401 <span class="text-label-sm font-label-sm opacity-50">PX</span></p>
-</div>
-</div>
-</div>
-<!-- Decorative HUD Frame -->
-<div class="absolute top-8 right-8 font-status-mono text-[10px] text-outline text-right">
-                STBL_MODU: AGRESİF<br/>
-                GECİKME: 14MS<br/>
-                SEKTÖR: 42-B
-            </div>
-</section>
-<!-- RIGHT SIDE: LOGIN PANEL -->
-<section class="w-full md:w-1/2 lg:w-2/5 bg-background flex items-center justify-center p-margin-mobile md:p-margin-desktop relative">
-<div class="absolute inset-0 pixel-grid opacity-10"></div>
-<!-- Login Container (Glassmorphism Card) -->
-<div class="relative z-10 w-full max-w-md bg-surface-container-lowest/40 backdrop-blur-3xl border border-secondary/10 p-card-padding-lg shadow-[0_32px_64px_-16px_rgba(0,0,0,0.8)] rounded-xl">
-<!-- Branding Anchor -->
-<div class="flex flex-col items-center mb-10"><div class="w-20 h-20 bg-secondary/5 border border-secondary/20 flex items-center justify-center mb-8 rounded-full shadow-[0_0_30px_rgba(166,230,255,0.1)]">
-<span class="material-symbols-outlined text-secondary text-4xl opacity-80" data-icon="security">security</span>
-</div>
-<h2 class="font-display-lg-mobile text-display-lg-mobile text-on-surface tracking-tight mb-2">Intra Erişimi Gerekli</h2>
-<p class="font-body-base text-body-base text-on-surface-variant text-center opacity-60 max-w-[280px]">
-    Savaş alanına piksel yerleştirmek için Tek Oturum Açma kimlik doğrulaması gereklidir.
-</p></div>
-<!-- Form -->
-<form class="space-y-6" onsubmit="return false;"><button class="w-full bg-secondary text-on-secondary font-headline-md text-headline-md h-16 rounded-lg hover:bg-secondary-fixed-dim hover:shadow-[0_0_20px_rgba(166,230,255,0.4)] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-3 group overflow-hidden relative">
-<span class="material-symbols-outlined transition-transform group-hover:translate-x-1" data-icon="login">login</span>
-<span>42 Intra ile Giriş Yap</span>
-</button></form>
-<!-- Security Section -->
-<div class="mt-12 pt-8 border-t border-outline-variant/30"><div class="flex items-start gap-4 p-5 bg-secondary/5 border border-secondary/10 rounded-lg">
-<span class="material-symbols-outlined text-[#4ade80] text-xl" data-icon="verified_user">verified_user</span>
-<div>
-<div class="flex items-center gap-2 mb-1">
-<span class="h-1.5 w-1.5 rounded-full bg-[#4ade80] animate-pulse"></span>
-<h4 class="font-label-sm text-[11px] uppercase tracking-wider text-on-surface/80">Aktif Kampüs Cihazı</h4>
-</div>
-<p class="font-status-mono text-[10px] text-on-surface-variant/70 leading-relaxed">
-            Doğrulama başarılı. 42 ağına bağlı kampüs cihazları için erişime izin verildi.
-        </p>
-</div>
-</div></div>
-<!-- Footer Links -->
-<div class="mt-8 flex justify-between items-center px-2">
-<a class="font-label-sm text-label-sm text-outline hover:text-secondary transition-colors" href="#">İHLAL BİLDİR</a>
-<a class="font-label-sm text-label-sm text-outline hover:text-secondary transition-colors" href="#">PROTOKOL V1.0.4</a>
-</div>
-</div>
-<!-- Screen Noise Texture Overlay -->
-<div class="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay">
-<img alt="Noise overlay" class="w-full h-full object-cover" data-alt="A uniform, high-density digital noise texture with fine-grained static, mimicking the visual interference seen on an old CRT monitor or a high-tech tactical HUD. The grayscale palette is muted, designed to be used as a subtle overlay to add grit and realistic texture to a dark cyberpunk user interface. The image is clean of any large-scale patterns or recognizable shapes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb_5DqnxplM50XTV_EigkTtmWA9NQn2EWcaZysslRBfwF37gsLl2faRhsmoTypBYEdVd97EWuj-1P4hgQQiav62Nn81kijYJgfLpFIoXBmlreCCEbk8Eg9Ps9_SwajpxHnBEnNgUmXqYU-nh23GLyAgL54AfCpVTH9rxOekaTyOFwFMmXx3Asx1cAoMW8TtqAumozQx8exgEJkj2cQyomRGwwgU7iVzh2oduO9--9hM3W4NFdD6NJAh0rsdgqqrOKLWh6_h6k-Aq9d"/>
-</div>
-</section>
-</main>
-<!-- TOP APP BAR (As defined in JSON but adjusted for login context) -->
-<header class="fixed top-0 left-0 w-full h-16 flex justify-between items-center px-margin-mobile md:px-margin-desktop bg-surface/80 backdrop-blur-lg border-b border-secondary/30 z-50">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-secondary" data-icon="security">security</span>
-<span class="font-display-lg-mobile text-display-lg-mobile tracking-tighter text-secondary drop-shadow-[0_0_8px_rgba(76,214,255,0.6)]">42 PIXEL WAR</span>
-</div>
-<div class="flex items-center gap-6">
-<div class="hidden md:flex gap-8">
-<span class="font-status-mono text-status-mono text-secondary-fixed">SİSTEM DURUMU: NORMAL</span>
-</div>
-</div>
+
+<header class="fixed top-0 left-0 w-full h-16 flex justify-between items-center px-6 md:px-12 bg-surface/80 backdrop-blur-lg border-b border-secondary/20 z-50">
+    <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-secondary" data-icon="security">security</span>
+        <span class="font-display-lg-mobile text-lg md:text-xl font-bold tracking-wider text-secondary drop-shadow-[0_0_8px_rgba(76,214,255,0.5)]">42 PIXEL WAR</span>
+    </div>
+    <div class="flex items-center gap-6">
+        <div class="flex gap-8">
+            <span class="font-status-mono text-status-mono text-secondary-fixed text-xs tracking-widest opacity-90">SİSTEM DURUMU: NORMAL</span>
+        </div>
+    </div>
 </header>
-</body></html>
+
+<main class="flex flex-col md:flex-row w-full min-h-screen overflow-hidden relative pt-16">
+    
+    <section class="relative w-full md:w-1/2 lg:w-3/5 flex flex-col items-start justify-end p-12 overflow-hidden border-r border-secondary/10 bg-transparent">
+        <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            <div class="absolute inset-0 pixel-grid"></div>
+            <div class="absolute inset-0 scanline opacity-20"></div>
+            <div class="scanline-moving"></div>
+            
+            <div class="particle" style="left: 12%; animation-delay: 0s; animation-duration: 14s;"></div>
+            <div class="particle" style="left: 28%; animation-delay: 4s; animation-duration: 18s;"></div>
+            <div class="particle" style="left: 45%; animation-delay: 1.5s; animation-duration: 15s;"></div>
+            <div class="particle" style="left: 62%; animation-delay: 7s; animation-duration: 20s;"></div>
+            <div class="particle" style="left: 78%; animation-delay: 3s; animation-duration: 16s;"></div>
+            <div class="particle" style="left: 92%; animation-delay: 10s; animation-duration: 19s;"></div>
+            <div class="particle bg-tertiary" style="left: 20%; animation-delay: 5.5s; animation-duration: 17s; box-shadow: 0 0 6px rgba(255, 178, 186, 0.6);"></div>
+            <div class="particle bg-tertiary" style="left: 69%; animation-delay: 1.2s; animation-duration: 22s; box-shadow: 0 0 6px rgba(255, 178, 186, 0.6);"></div>
+            
+            <div class="absolute inset-0 flex items-center justify-center opacity-30">
+                <div class="w-full h-full relative">
+                    <div class="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-secondary-container blur-[120px] opacity-20 blob-1"></div>
+                    <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-on-tertiary-container blur-[150px] opacity-20 blob-2"></div>
+                    <img alt="42 Pixel War Tuvali" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGpUQQOwWCq2p28wlS907NwTZ8hieIdtM4ObbPgWX90geuEjnl4ynYhOjcAr_qRDBoTlmthYLGgAJbO7k_GVCfCbU9EIncp_XFW4oQwpQwrVdTaxhC-y5MlqriUWY_FFsuQ44P2fDdcNbPrJropLokFfRBDxWyLAFAdrPVHQ6m9ragBmqRxvxIIm0NwbCx0Oe-QZb3G8W6tft50b-y_t_GYBjB8j1qkCJF61q7Til1VCXaHlYcygO8wzmT-pLhmqQowuEuexUnNpcC"/>
+                </div>
+            </div>
+        </div>
+        
+        <div class="relative z-10 w-full">
+            <div class="flex items-center space-x-3 mb-4">
+                <span class="flex h-2.5 w-2.5 bg-[#4ade80] rounded-full animate-pulse glow-blue"></span>
+                <span class="font-status-mono text-xs text-[#4ade80] tracking-widest uppercase">
+                    TUVAL: AKTİF / GERÇEK ZAMANLI SAVAŞ ÇEVRİMİÇİ
+                </span>
+            </div>
+            
+            <h1 class="font-display-lg text-4xl md:text-5xl lg:text-6xl text-secondary tracking-tight font-extrabold drop-shadow-[0_0_20px_rgba(0,209,255,0.4)] mb-10 animate-glow-pulse uppercase">
+                42 PIXEL WAR
+            </h1>
+            
+            <div class="flex space-x-8 border-l-2 border-secondary/20 pl-6">
+                <div>
+                    <p class="font-status-mono text-xs text-secondary tracking-wider">İSTANBUL</p>
+                    <p class="font-display-lg-mobile text-2xl md:text-3xl font-bold text-on-surface flex items-center gap-2 mt-1">
+                        <span class="animate-data-flicker">42,892</span>
+                        <span class="text-xs font-normal opacity-40">PX</span>
+                        <span class="flex h-1.5 w-1.5 bg-secondary rounded-full animate-ping opacity-75"></span>
+                    </p>
+                </div>
+                <div class="border-r border-outline-variant/30 h-10 self-center"></div>
+                <div>
+                    <p class="font-status-mono text-xs text-tertiary tracking-wider">KOCAELİ</p>
+                    <p class="font-display-lg-mobile text-2xl md:text-3xl font-bold text-on-surface flex items-center gap-2 mt-1">
+                        <span class="animate-data-flicker" style="animation-delay: 1s;">39,401</span>
+                        <span class="text-xs font-normal opacity-40">PX</span>
+                        <span class="flex h-1.5 w-1.5 bg-tertiary rounded-full animate-ping opacity-75" style="animation-delay: 0.5s;"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="w-full md:w-1/2 lg:w-2/5 flex items-center justify-center p-margin-mobile md:p-margin-desktop relative bg-transparent">
+        <div class="relative z-10 w-full max-w-md bg-surface/40 backdrop-blur-2xl border border-white/10 hover:border-white/20 transition-all duration-500 p-10 shadow-[0_0_50px_rgba(0,0,0,0.6)] rounded-2xl group">
+            
+            <div class="flex flex-col items-center mb-8">
+                <div class="w-14 h-14 bg-gradient-to-br from-white/5 to-transparent border border-white/10 flex items-center justify-center mb-5 rounded-xl transition-all duration-500 group-hover:border-white/30">
+                    <span class="material-symbols-outlined text-white text-2xl" data-icon="security">security</span>
+                </div>
+                <h2 class="font-display-lg-mobile text-xl md:text-2xl font-bold text-on-surface tracking-tight mb-2 text-center">İntra Erişimi Gerekli</h2>
+                <p class="font-body-base text-sm text-on-surface-variant text-center opacity-70 max-w-[240px]">
+                    Piksel yerleştirmek için kimliğinizi doğrulayın.
+                </p>
+            </div>
+            
+            <form class="space-y-6" onsubmit="return false;">
+                <button class="w-full bg-neutral-950 text-white hover:bg-white hover:text-black font-extrabold text-base h-14 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 group/btn overflow-hidden relative border-2 border-neutral-700 hover:border-white hover:shadow-[0_0_35px_rgba(255,255,255,0.6)] hover:-translate-y-1 active:translate-y-0 active:scale-[0.97]">
+                    <span class="material-symbols-outlined transition-transform duration-300 group-hover/btn:scale-110 text-2xl" data-icon="login">login</span>
+                    <span class="tracking-wider uppercase font-extrabold text-sm md:text-base">42 İntra ile Giriş Yap</span>
+                </button>
+            </form>
+            
+            <div class="mt-8 pt-6 border-t border-white/5">
+                <div class="flex items-center gap-3 p-3.5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors">
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4ade80] opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#4ade80]"></span>
+                    </span>
+                    <div>
+                        <h4 class="font-label-sm text-[11px] uppercase tracking-wider text-on-surface/90 font-bold">Aktif Kampüs Cihazı</h4>
+                        <p class="font-status-mono text-[10px] text-on-surface-variant/60 mt-0.5">Ağ doğrulandı</p>
+                    </div>
+                    <span class="material-symbols-outlined text-[#4ade80] text-base ml-auto" data-icon="verified_user">verified_user</span>
+                </div>
+            </div>
+            
+            <div class="mt-6 flex justify-between items-center px-1">
+                <a class="font-status-mono text-[11px] text-on-surface-variant/70 hover:text-white transition-colors tracking-wider" href="#">İHLAL BİLDİR</a>
+                <a class="font-status-mono text-[11px] text-on-surface-variant/70 hover:text-white transition-colors tracking-wider" href="#">PROTOKOL V1.0.4</a>
+            </div>
+        </div>
+        
+        <div class="absolute inset-0 pointer-events-none opacity-[0.02] mix-blend-overlay">
+            <img alt="Parazit katmanı" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb_5DqnxplM50XTV_EigkTtmWA9NQn2EWcaZysslRBfwF37gsLl2faRhsmoTypBYEdVd97EWuj-1P4hgQQiav62Nn81kijYJgfLpFIoXBmlreCCEbk8Eg9Ps9_SwajpxHnBEnNgUmXqYU-nh23GLyAgL54AfCpVTH9rxOekaTyOFwFMmXx3Asx1cAoMW8TtqAumozQx8exgEJkj2cQyomRGwwgU7iVzh2oduO9--9hM3W4NFdD6NJAh0rsdgqqrOKLWh6_h6k-Aq9d"/>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
